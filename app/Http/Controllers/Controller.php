@@ -23,4 +23,14 @@ class Controller extends BaseController
         'news 6',
         'news 7',
     ];
+
+    /**
+     * @var array|string[]
+     */
+    protected array $categoryList = [
+        'спортивные новости',
+        'новости о политике',
+        'что происходит в мире',
+        'что происходит в России',
+    ];
 }

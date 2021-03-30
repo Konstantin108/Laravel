@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,36 +19,35 @@ use Illuminate\Support\Facades\Route;
 
 //<-- используем свой контроллер
 
-Route::get('/', function () {
-    return view('welcome');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', function ()
+{
+    return "<h1>Добро пожаловать на сайт, это учебный проект \"Агрегатор новостей\"</h1>
+            <a href='".route('category')."'>перейти к новостям</a><br>
+            <a href='".route('create')."'>предложить новость</a>";
+
 });
 
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 
-Route::get('/welcome/{name}', function (string $name): string {
-    return "<h1>Добро пожаловать на сайт, {$name}</h1>";;
-});
-
-Route::get('/info', function () {
-    return 'Это учебный проект с курса по Laravel';
-});
+Route::get('/category', [CategoryController::class, 'index'])->name('category');
 
 Route::get('/news/show/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')->name('news.show');
 
-//Route::get('/news', function()
-//{
-//    $news = ['первая новость', 'вторая новость'];
-//
-//    foreach ($news as $new){
-//        echo "<h2>{$new}</h2><br>";
-//    }
-//});
+Route::get('/category/show/{name}', [CategoryController::class, 'show'])
+    ->where('name', '[\w+\s*\w+]*')->name('category.show');
+
+Route::get('/create', [NewsController::class, 'create'])->name('create');
 
 //for admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::resource('/categories', AdminCategoryController::class);
+    Route::resource('/category', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
+    Route::resource('/create', AdminNewsController::class);
 });
 
 
