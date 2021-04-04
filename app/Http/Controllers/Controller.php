@@ -15,13 +15,13 @@ class Controller extends BaseController
      * @var array|string[]
      */
     protected array $newsList = [
-        'news 1',
-        'news 2',
-        'news 3',
-        'news 4',
-        'news 5',
-        'news 6',
-        'news 7',
+        '<strong><em>news 1</em></strong>',
+        '<strong><em>news 2</em></strong>',
+        '<strong><em>news 3</em></strong>',
+        '<strong><em>news 4</em></strong>',
+        '<strong><em>news 5</em></strong>',
+        '<strong><em>news 6</em></strong>',
+        '<strong><em>news 7</em></strong>',
     ];
 
     /**

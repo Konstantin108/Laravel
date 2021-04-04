@@ -8,12 +8,16 @@ class NewsController extends Controller
 {
     public function index()
     {
-        return view('news', ['newsList' => $this->newsList]);
+
+        return view('news.index', [
+            'newsList' => $this->newsList,
+
+        ]);
     }
 
     public function show(int $id)
     {
-        return "отобразить запись с id={$id}";
+        return view('news.show', ['news' => $id]);
     }
 
     public function create()
