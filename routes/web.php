@@ -25,9 +25,7 @@ use App\Http\Controllers\CategoryController;
 
 Route::get('/', function ()
 {
-    return "<h1>Добро пожаловать на сайт, это учебный проект \"Агрегатор новостей\"</h1>
-            <a href='".route('category')."'>перейти к новостям</a><br>
-            <a href='".route('create')."'>предложить новость</a>";
+    return view('index');
 
 });
 

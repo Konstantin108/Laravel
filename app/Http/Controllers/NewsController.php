@@ -13,7 +13,8 @@ class NewsController extends Controller
 
     public function show(int $id)
     {
-        return "отобразить запись с id={$id}";
+
+        return view('news.show', ['news' => $id]);
     }
 
     public function create()

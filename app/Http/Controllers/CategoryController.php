@@ -11,9 +11,8 @@ class CategoryController extends Controller
         return view('category', ['categoryList' => $this->categoryList]);
     }
 
-    public function show(string $category)
+    public function show()
     {
-        return "показать {$category}
-                <br><a href='".route('news')."'>перейти к новостям</a>" .'<br>';
+        return view('news', ['newsList' => $this->newsList]);
     }
 }
