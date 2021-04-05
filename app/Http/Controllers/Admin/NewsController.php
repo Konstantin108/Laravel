@@ -14,7 +14,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-            return view('layouts.admin-main');
+            return view('components.admin-index', [
+                'newsList' => $this->newsList
+            ]);
     }
 
     /**
