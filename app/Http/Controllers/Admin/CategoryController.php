@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return 'список категорий';
+        return view('components.admin-category', ['categoryList' => $this->categoryList]);
     }
 
     /**

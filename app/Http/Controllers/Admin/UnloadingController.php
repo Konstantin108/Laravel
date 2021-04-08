@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class UnloadingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-            return view('components.admin-index', [
-                'newsList' => $this->newsList
-            ]);
+        return view('components.admin-unloading');
     }
 
     /**
@@ -24,9 +22,9 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function result()
     {
-        return view('components.admin-create');
+        //
     }
 
     /**
@@ -37,9 +35,25 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => ['required', 'string', 'min:2']]);
-        dd($request->all());
+        $res = $request->except('_token');
+        function getContent($arr)
+        {
+            return implode(" ", $arr);
+        }
+
+       echo $content = getContent($res);
+
+        function writeRes($myFile, $res){     //<-- функция для записи результата в файл
+
+            $result = $res;
+
+            file_put_contents($myFile, $result);
+        }
+
+        writeRes('/home/vagrant/code/laravel/app/Http/Controllers/Admin/res.txt', $content);
+
+        return response()->download('/home/vagrant/code/laravel/app/Http/Controllers/Admin/res.txt');
+
     }
 
     /**
@@ -48,9 +62,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        return "отобразить запись с id={$id}";
+        //
     }
 
     /**
@@ -61,7 +75,7 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        return 'редактировать новость';
+        //
     }
 
     /**

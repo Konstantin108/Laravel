@@ -17,13 +17,29 @@ class NewsController extends Controller
         return view('news.show', ['news' => $id]);
     }
 
-    public function create()
+    public function answer()
     {
-        return "
-                <h2>Создание новости</h2>
-                <input value='Заголовок новости'>
-                <input value='категория'><br><br>
-                <textarea style='height: 200px; width: 260px' placeholder='ввод текста'></textarea>
-            ";
+        return view('components.answer');
+    }
+
+    public function message()
+    {
+        return view('components.message');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function messageStore(Request $request)
+    {
+        $request->validate([
+            'firstname' => ['required', 'string']
+            ]);
+        $firstname = $request->only('firstname');
+        $surname = $request->only('surname');
+        return redirect()->route('answer');
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use \App\Http\Controllers\Admin\UnloadingController as AdminUnloadingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,13 @@ Route::get('/', function ()
 
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 
+Route::get('/message', [NewsController::class, 'message'])->name('message');
+
+Route::get('/answer', [NewsController::class, 'answer'])->name('answer');
+
 Route::get('/category', [CategoryController::class, 'index'])->name('category');
+
+Route::post('/messageStore', [NewsController::class, 'messageStore'])->name('messageStore');
 
 Route::get('/news/show/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')->name('news.show');
@@ -46,6 +53,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('/category', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
     Route::resource('/create', AdminNewsController::class);
+    Route::resource('/unloading', AdminUnloadingController::class);
 });
 
 

@@ -1,5 +1,6 @@
 @extends('layouts.site-main')
 @section('content')
+
     <div>
         <h3>{{ $news  }}</h3>
         <div class="container" style="margin-top: 100px">

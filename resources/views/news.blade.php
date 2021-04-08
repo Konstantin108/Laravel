@@ -1,5 +1,6 @@
 @extends('layouts.site-main')
 @section('content')
+
     <div class="container" style="margin-top: 100px">
         <div class="row">
             @forelse ($newsList as $key => $news)
@@ -23,5 +24,6 @@
         </div>
     </div>
     <hr>
+
 @endsection
 

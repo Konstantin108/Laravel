@@ -5433,6 +5433,22 @@ a.close.disabled {
   overflow-y: auto;
 }
 
+.content_for_btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.my_input::-webkit-input-placeholder{
+    opacity: 1;
+    color: grey;
+    transition: opacity 0.3s ease;
+}
+
+.my_input:focus::-webkit-input-placeholder{
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
 .modal-dialog-centered {
   display: flex;
   align-items: center;

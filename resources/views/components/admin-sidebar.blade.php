@@ -13,6 +13,16 @@
                     Новости
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
+                <a class="nav-link collapsed" href="{{ route('admin.news.create') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-plus"></i></div>
+                    Добавить новость
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <a class="nav-link collapsed" href="{{ route('admin.unloading.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas phpdebugbar-fa-address-book"></i></div>
+                    Заказать выгрузку
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
