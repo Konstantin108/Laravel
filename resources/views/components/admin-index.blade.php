@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
+    <h1>список новостей (всего: {{ $count }})</h1>
     <div class="row">
         <table class="table table-bordered">
             <thead>
@@ -12,11 +13,11 @@
             </tr>
             </thead>
             <tbody>
-            @forelse($newsList as $key => $news)
+            @forelse($news as $newsItem)
                 <tr>
-                    <td>{{$key}}</td>
-                    <td>{!!  $news !!}</td>
-                    <td>{{ now() }}</td>
+                    <td>{{$newsItem->id}}</td>
+                    <td>{!!  $newsItem->title !!}</td>
+                    <td>{{ $newsItem->created_at }}</td>
                     <td><a href="">Ред.</a>&nbsp;<a href="">Уд.</a></td>
                 </tr>
             @empty

@@ -11,9 +11,8 @@
                 </div>
                 <div class="col-lg-8 align-self-baseline">
                     <p class="text-white-75 font-weight-light mb-5">Публикуем новости обо всём на свете</p>
-                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{{ route('category')}}">Перейти к
-                        новостям</a>
-                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="#">Предложить новость</a>
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{{ route('category')}}">Новости по категориям</a>
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{{ route('news')}}">Все новости</a>
                 </div>
             </div>
         </div>

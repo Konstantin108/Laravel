@@ -40,11 +40,14 @@ Route::get('/category', [CategoryController::class, 'index'])->name('category');
 
 Route::post('/messageStore', [NewsController::class, 'messageStore'])->name('messageStore');
 
+Route::get('/indexByCategoryId/{id}', [NewsController::class, 'indexByCategoryId'])
+    ->where('id', '\d+')->name('indexByCategoryId');
+
 Route::get('/news/show/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')->name('news.show');
 
-Route::get('/category/show/{name}', [CategoryController::class, 'show'])
-    ->where('name', '[\w+\s*\w+]*')->name('category.show');
+Route::get('/category/show/{id}', [CategoryController::class, 'show'])
+    ->where('id', '\d+')->name('category.show');
 
 Route::get('/create', [NewsController::class, 'create'])->name('create');
 

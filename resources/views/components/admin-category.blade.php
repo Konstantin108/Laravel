@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
     <h1>список категорий</h1>
     <div class="row">
         <table class="table table-bordered">
@@ -12,15 +13,15 @@
             </tr>
             </thead>
             <tbody>
-            @forelse($categoryList as $key => $category)
+            @forelse($categories as $category)
                 <tr>
-                    <td>{{$key}}</td>
-                    <td>{!!  $category !!}</td>
-                    <td>{{ now() }}</td>
+                    <td>{{$category->id}}</td>
+                    <td>{!!  $category->title !!}</td>
+                    <td>{{ $category->created_at }}</td>
                     <td><a href="">Ред.</a>&nbsp;<a href="">Уд.</a></td>
                 </tr>
             @empty
-                <td colspan="4">новостей нет</td>
+                <td colspan="4">Категорий нет</td>
             @endforelse
             </tbody>
         </table>
