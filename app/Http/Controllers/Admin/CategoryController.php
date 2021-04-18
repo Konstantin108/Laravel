@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = (new Category())->getCategories();
+        $categories = Category::where('is_visible', true)->get();
         return view('components.admin-category', ['categories' => $categories]);
     }
 
@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return 'добавление категорий';
+        return view('components.admin-add-category');
     }
 
     /**
@@ -37,7 +37,39 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string', 'min:2'],
+            'description' => ['required', 'string', 'min:2'],
+            'is_visible' => ['required', 'string', 'min:1']
+        ]);
+        $data = $request->only([
+            'title',
+            'description',
+            'is_visible'
+        ]);
+        $category = Category::create($data);
+        if($category){
+            return redirect()->route('admin.category.index')
+                ->with('success', 'категория успешно добавлена');
+        }
+        return back()->with('error', 'не удалось добавить категорию');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteCategory($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
+        if($category){
+            return redirect()->route('admin.category.index')
+                ->with('success', 'категория была удалена');
+        }
+        return back()->with('error', 'не удалось удалить категорию');
     }
 
     /**
@@ -54,24 +86,37 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        return 'редактирование категории';
+        return view('components.category.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string', 'min:2'],
+            'description' => ['required', 'string', 'min:2'],
+            'is_visible' => ['required', 'string', 'min:1']
+        ]);
+        $data = $request->only(['title', 'description', 'is_visible']);
+        $status = $category->fill($data)->save();
+        if($status){
+            return redirect()->route('admin.category.index')
+                ->with('success', 'категория успешно изменена');
+        }
+        return back()->with('error', 'не удалось сохранить изменения');
     }
 
     /**

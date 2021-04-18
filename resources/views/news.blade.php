@@ -2,6 +2,7 @@
 @section('content')
 
     <div class="container" style="margin-top: 100px">
+        <h1>Опубликовано новостей {{ $count ?? ''}}</h1>
         <div class="row">
             @forelse ($news as $newsItem)
                 <div class="col-lg-8 col-md-10 mx-auto">
@@ -16,13 +17,14 @@
                             <a href="#">Администратор</a>
                             {{ $newsItem->created_at ?? now() }}</p>
                     </div>
-                    <h3>{{ $newsItem->categories_title }}</h3>
+                    <h3>{{ $newsItem->category->title }}</h3>
                     <hr>
                 </div>
             @empty
                 <h1>Нет новостей</h1>
             @endforelse
         </div>
+        <div>{{ $news->links() }}</div>
     </div>
     <hr>
 

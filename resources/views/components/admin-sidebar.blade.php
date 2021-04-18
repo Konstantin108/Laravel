@@ -18,6 +18,11 @@
                     Добавить новость
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
+                <a class="nav-link collapsed" href="{{ route('admin.category.create') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-plus"></i></div>
+                    Добавить категорию
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
                 <a class="nav-link collapsed" href="{{ route('admin.unloading.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas phpdebugbar-fa-address-book"></i></div>
                     Заказать выгрузку

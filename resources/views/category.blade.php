@@ -8,8 +8,7 @@
                     <div class="post-preview">
                         <a href='{{route('indexByCategoryId',  ['id' => $category->id])}}'>
                             <h2 class="post-title">
-                                {!!  $category->title
-!!}
+                                {!!  $category->title !!}
                             </h2>
                             <h3 class="post-title">
                                 {!!  $category->description !!}

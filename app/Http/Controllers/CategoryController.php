@@ -10,13 +10,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = (new Category())->getCategories();
+        $categories = Category::where('is_visible', true)
+                        ->get();
         return view('category', ['categories' => $categories]);
     }
-
-//    public function show($id)
-//    {
-//        $categories = (new Category())->getCategoriesById($id);
-//        return view('category.show', ['categories' => $categories]);
-//    }
 }

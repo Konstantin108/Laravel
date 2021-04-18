@@ -35,6 +35,12 @@ class UnloadingController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'firstname' => ['required', 'string', 'min:1'],
+            'surname' => ['required', 'string', 'min:1'],
+            'phone' => ['required', 'string', 'min:1'],
+            'description' => ['required', 'string', 'min:1']
+        ]);
         $res = $request->except('_token');
         function getContent($arr)
         {

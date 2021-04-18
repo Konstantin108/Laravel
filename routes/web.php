@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\UnloadingController as AdminUnloadingController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
-use \App\Http\Controllers\Admin\UnloadingController as AdminUnloadingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,32 +24,47 @@ use \App\Http\Controllers\Admin\UnloadingController as AdminUnloadingController;
 //    return view('welcome');
 //});
 
-Route::get('/', function ()
-{
+Route::get('/', function () {
     return view('index');
-
 });
 
-Route::get('/news', [NewsController::class, 'index'])->name('news');
+Route::get('admin/news/delete/{id}', [AdminNewsController::class, 'delete'])
+    ->where('id', '\d+')
+    ->name('delete');
 
-Route::get('/message', [NewsController::class, 'message'])->name('message');
+Route::get('admin/category/deleteCategory/{id}', [AdminCategoryController::class, 'deleteCategory'])
+    ->where('id', '\d+')
+    ->name('deleteCategory');
 
-Route::get('/answer', [NewsController::class, 'answer'])->name('answer');
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news');
 
-Route::get('/category', [CategoryController::class, 'index'])->name('category');
+Route::get('/message', [NewsController::class, 'message'])
+    ->name('message');
 
-Route::post('/messageStore', [NewsController::class, 'messageStore'])->name('messageStore');
+Route::get('/answer', [NewsController::class, 'answer'])
+    ->name('answer');
+
+Route::get('/category', [CategoryController::class, 'index'])
+    ->name('category');
+
+Route::post('/messageStore', [NewsController::class, 'messageStore'])
+    ->name('messageStore');
 
 Route::get('/indexByCategoryId/{id}', [NewsController::class, 'indexByCategoryId'])
-    ->where('id', '\d+')->name('indexByCategoryId');
+    ->where('id', '\d+')
+    ->name('indexByCategoryId');
 
 Route::get('/news/show/{id}', [NewsController::class, 'show'])
-    ->where('id', '\d+')->name('news.show');
+    ->where('id', '\d+')
+    ->name('news.show');
 
 Route::get('/category/show/{id}', [CategoryController::class, 'show'])
-    ->where('id', '\d+')->name('category.show');
+    ->where('id', '\d+')
+    ->name('category.show');
 
-Route::get('/create', [NewsController::class, 'create'])->name('create');
+Route::get('/create', [NewsController::class, 'create'])
+    ->name('create');
 
 //for admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -59,4 +74,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('/unloading', AdminUnloadingController::class);
 });
 
+Route::get('/collections', function () {
+    $collect = collect([
+        'id' => 1,
+        'age' => '30',
+        'name' => 'kostya',
+        'description' => 'programmer'
+    ]);
 
+    dd($collect->only('description'));
+});
