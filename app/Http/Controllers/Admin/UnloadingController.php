@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Unloading;
 use Illuminate\Http\Request;
 
 class UnloadingController extends Controller
@@ -30,17 +31,11 @@ class UnloadingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Unloading $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Unloading $request)
     {
-        $request->validate([
-            'firstname' => ['required', 'string', 'min:1'],
-            'surname' => ['required', 'string', 'min:1'],
-            'phone' => ['required', 'string', 'min:1'],
-            'description' => ['required', 'string', 'min:1']
-        ]);
         $res = $request->except('_token');
         function getContent($arr)
         {

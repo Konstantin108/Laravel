@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\NewsStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateNews;
+use App\Http\Requests\UpdateNews;
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -55,15 +58,11 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateNews $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateNews $request)
     {
-        $request->validate([
-            'category_id' => ['required', 'int', 'min:1'],
-            'title' => ['required', 'string', 'min:2']
-        ]);
         $data = $request->only([
             'category_id',
             'title',
@@ -74,9 +73,9 @@ class NewsController extends Controller
         $news = News::create($data);
         if($news){
             return redirect()->route('admin.news.index')
-                ->with('success', 'новость успешно добавлена');
+                ->with('success', __('messages.admin.news.create.success'));
         }
-        return back()->with('error', 'не удалось добавить новость');
+        return back()->with('error', __('messages.admin.news.create.fail'));
     }
 
     /**
@@ -94,7 +93,7 @@ class NewsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete($id)
     {
@@ -102,48 +101,48 @@ class NewsController extends Controller
         $news->delete();
         if($news){
             return redirect()->route('admin.news.index')
-                ->with('success', 'новость была удалена');
+                ->with('success', __('messages.admin.news.delete.success'));
         }
-        return back()->with('error', 'не удалось удалить новость');
+        return back()->with('error', __('messages.admin.news.delete.fail'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  News $news
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(News $news)
     {
-        return view('components.news.edit', ['news'=>$news]);
+        $categories = Category::all();
+        return view('components.news.edit', [
+            'news'=> $news,
+            'categories' => $categories
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  News $news
-     * @return \Illuminate\Http\Response
+     * @param UpdateNews $request
+     * @param News $news
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(UpdateNews $request, News $news)
     {
-        $request->validate([
-            'category_id' => ['required', 'int', 'min:1'],
-            'title' => ['required', 'string', 'min:2']
-        ]);
         $data = $request->only([
-            'category_id',
             'title',
             'slug',
             'text',
             'status'
         ]);
-        $status = $news->fill($data)->save();
-        if($status){
+        $news->category_id = $request->validated()['category_id'];
+        $news = $news->fill($data);
+        if($news->save()){
             return redirect()->route('admin.news.index')
-                ->with('success', 'новость успешно изменена');
+                ->with('success', __('messages.admin.news.update.success'));
         }
-        return back()->with('error', 'не удалось сохранить изменения');
+        return back()->with('error', __('messages.admin.news.update.fail'));
     }
 
     /**

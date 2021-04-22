@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCategory;
+use App\Http\Requests\UpdateCategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -32,16 +34,11 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateCategory $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateCategory $request)
     {
-        $request->validate([
-            'title' => ['required', 'string', 'min:2'],
-            'description' => ['required', 'string', 'min:2'],
-            'is_visible' => ['required', 'string', 'min:1']
-        ]);
         $data = $request->only([
             'title',
             'description',
@@ -50,16 +47,16 @@ class CategoryController extends Controller
         $category = Category::create($data);
         if($category){
             return redirect()->route('admin.category.index')
-                ->with('success', 'категория успешно добавлена');
+                ->with('success', __('messages.admin.category.create.success'));
         }
-        return back()->with('error', 'не удалось добавить категорию');
+        return back()->with('error',__('messages.admin.category.create.fail'));
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteCategory($id)
     {
@@ -67,18 +64,18 @@ class CategoryController extends Controller
         $category->delete();
         if($category){
             return redirect()->route('admin.category.index')
-                ->with('success', 'категория была удалена');
+                ->with('success', __('messages.admin.category.delete.success'));
         }
-        return back()->with('error', 'не удалось удалить категорию');
+        return back()->with('error', __('messages.admin.category.delete.fail'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function show($category)
+    public function show(Category $category): \Illuminate\Http\Response
     {
         return "показать {$category}";
     }
@@ -99,24 +96,19 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Category  $category
-     * @return \Illuminate\Http\Response
+     * @param UpdateCategory $request
+     * @param Category $category
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategory $request, Category $category)
     {
-        $request->validate([
-            'title' => ['required', 'string', 'min:2'],
-            'description' => ['required', 'string', 'min:2'],
-            'is_visible' => ['required', 'string', 'min:1']
-        ]);
         $data = $request->only(['title', 'description', 'is_visible']);
         $status = $category->fill($data)->save();
         if($status){
             return redirect()->route('admin.category.index')
-                ->with('success', 'категория успешно изменена');
+                ->with('success', __('messages.admin.category.update.success'));
         }
-        return back()->with('error', 'не удалось сохранить изменения');
+        return back()->with('error', __('messages.admin.category.update.fail'));
     }
 
     /**

@@ -12,16 +12,37 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="title">наименование</label>
-                        <input type="text" id="title" name="title" class="form-control" value="{{$category->title}}">
+                        <label for="title">Наименование</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            @error('title') style="border: red 1px solid;" @enderror
+                            value="{{$category->title}}">
+                        @if($errors->has('title'))
+                            @foreach($errors->get('title') as $error)
+                                {{ $error }}
+                            @endforeach
+                        @endif
                     </div>
                     <div class="form-group">
-                        <label for="description">описание</label>
-                        <textarea type="text" id="description" name="description"
-                                  class="form-control">{!! $category->description !!}</textarea>
+                        <label for="description">Описание</label>
+                        <textarea
+                            type="text"
+                            id="description"
+                            name="description"
+                            @error('description') style="border: red 1px solid;" @enderror
+                            class="form-control">{!! $category->description !!}
+                        </textarea>
+                        @if($errors->has('description'))
+                            @foreach($errors->get('description') as $error)
+                                {{ $error }}
+                            @endforeach
+                        @endif
                     </div>
                     <div class="form-group">
-                        <label for="slug">отображать</label>
+                        <label for="slug">Отображать</label>
                         <input
                             type="checkbox"
                             id="is_visible"

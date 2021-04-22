@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\NewsStatusEnum;
+use App\Http\Requests\SendMessage;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -72,16 +73,11 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param SendMessage $request
      * @return \Illuminate\Http\Response
      */
-    public function messageStore(Request $request)
+    public function messageStore(SendMessage $request)
     {
-        $request->validate([
-            'firstname' => ['required', 'string', 'min:1'],
-            'surname' => ['required', 'string', 'min:1'],
-            'description' => ['required', 'string', 'min:1']
-            ]);
         $firstname = $request->only('firstname');
         $surname = $request->only('surname');
         return redirect()->route('answer');

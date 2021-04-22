@@ -22,7 +22,7 @@
                                    placeholder="поле для ввода имени" value="{{old('firstname')}}">
                         </div>
                         <div class="form-group">
-                            <label for="surname">Фамилмя</label>
+                            <label for="surname">Фамилия</label>
                             <input type="text" id="surname" name="surname" class="form-control my_input"
                                    placeholder="поле для ввода фамилии" value="{{old('surname')}}">
                         </div>
