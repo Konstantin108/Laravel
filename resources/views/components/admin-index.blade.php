@@ -19,12 +19,12 @@
             <tbody>
             @forelse($news as $newsItem)
                 <tr>
-                    <td>{{$newsItem->id}}</td>
+                    <td>{{ $newsItem->id }}</td>
                     <td>{!!  $newsItem->title !!}</td>
                     <td>{{ $newsItem->created_at }}</td>
                     <td>{{ $newsItem->updated_at }}</td>
                     <td>
-                        <a href="{{ route('admin.news.edit', ['news'=>$newsItem]) }}">Ред.</a>&nbsp
+                        <a href="{{ route('admin.news.edit', ['news'=> $newsItem]) }}">Ред.</a>&nbsp
                         <a href="{{ route('delete', ['id' => $newsItem->id]) }}">Уд.</a>
                     </td>
                 </tr>

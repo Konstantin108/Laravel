@@ -19,7 +19,6 @@ class NewsController extends Controller
      */
     public function index()
     {
-
             $news = News::select([
                     'id',
                     'title',

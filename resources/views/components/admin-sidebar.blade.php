@@ -3,6 +3,11 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Базовые категории</div>
+                <a class="nav-link collapsed" href="{{route('admin.user.index')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                    Пользователи
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
                 <a class="nav-link collapsed" href="{{ route('admin.category.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Категории
@@ -32,7 +37,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Выполнен вход:</div>
-            Тут будет имя пользователя
+            {{Auth::user()->name}}
             <br><br>
         </div>
     </nav>

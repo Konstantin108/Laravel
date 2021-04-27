@@ -27,7 +27,9 @@
 
         <!-- Content-->
         <div class="content" style="min-height: 100px">
+
             @yield('content')
+
         </div>
 
         <!-- About-->

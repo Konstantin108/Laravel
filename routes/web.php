@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UnloadingController as AdminUnloadingController;
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
@@ -27,14 +29,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-
-Route::get('admin/news/delete/{id}', [AdminNewsController::class, 'delete'])
-    ->where('id', '\d+')
-    ->name('delete');
-
-Route::get('admin/category/deleteCategory/{id}', [AdminCategoryController::class, 'deleteCategory'])
-    ->where('id', '\d+')
-    ->name('deleteCategory');
 
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news');
@@ -66,12 +60,36 @@ Route::get('/category/show/{id}', [CategoryController::class, 'show'])
 Route::get('/create', [NewsController::class, 'create'])
     ->name('create');
 
-//for admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::resource('/category', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
-    Route::resource('/create', AdminNewsController::class);
-    Route::resource('/unloading', AdminUnloadingController::class);
+
+Route::group(['middleware' => 'auth'], function () {
+    //for account
+    Route::get('/account', AccountController::class)
+        ->name('account');
+    Route::get('/logout', function (){
+        \Auth::logout();
+        return redirect()->route('login');
+    })->name('logout');
+
+    //for admin
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+        Route::resource('/category', AdminCategoryController::class);
+        Route::resource('/news', AdminNewsController::class);
+        Route::resource('/create', AdminNewsController::class);
+        Route::resource('/unloading', AdminUnloadingController::class);
+        Route::resource('/user', AdminUsersController::class);
+    });
+
+    Route::get('admin/news/delete/{id}', [AdminNewsController::class, 'delete'])
+        ->where('id', '\d+')
+        ->name('delete');
+
+    Route::get('admin/category/deleteCategory/{id}', [AdminCategoryController::class, 'deleteCategory'])
+        ->where('id', '\d+')
+        ->name('deleteCategory');
+
+    Route::get('admin/users/deleteUser/{id}', [AdminUsersController::class, 'deleteUser'])
+        ->where('id', '\d+')
+        ->name('deleteUser');
 });
 
 Route::get('/collections', function () {
@@ -84,3 +102,8 @@ Route::get('/collections', function () {
 
     dd($collect->only('description'));
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');

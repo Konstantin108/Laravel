@@ -19,7 +19,7 @@
             <tbody>
             @forelse($categories as $category)
                 <tr>
-                    <td>{{$category->id}}</td>
+                    <td>{{ $category->id }}</td>
                     <td>{!!  $category->title !!}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>{{ $category->updated_at }}</td>

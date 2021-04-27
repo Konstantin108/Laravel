@@ -11,7 +11,7 @@
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{route('category')}}">Список
                         категорий</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger"
-                                        href="{{route('admin.news.index')}}">Админ</a></li>
+                                        href="{{route('account')}}">Личный кабинет</a></li>
             </ul>
         </div>
     </div>
