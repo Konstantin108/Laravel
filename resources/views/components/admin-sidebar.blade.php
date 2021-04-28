@@ -36,6 +36,9 @@
             </div>
         </div>
         <div class="sb-sidenav-footer">
+            @if(Auth::user()->avatar)
+                <img src="{{ Auth::user()->avatar }}" alt="avatar">
+            @endif
             <div class="small">Выполнен вход:</div>
             {{Auth::user()->name}}
             <br><br>

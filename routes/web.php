@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ParserController;
+use \App\Http\Controllers\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,7 +101,6 @@ Route::get('/collections', function () {
         'name' => 'kostya',
         'description' => 'programmer'
     ]);
-
     dd($collect->only('description'));
 });
 
@@ -107,3 +108,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
+
+Route::get('/parsing', ParserController::class);
+
+//for guest
+Route::group(['middleware' => 'guest', 'prefix' => 'socialite'], function (){
+    Route::get('/auth/vk', [SocialiteController::class, 'init'])
+        ->name('vk.init');
+    Route::get('/auth/vk/callback', [SocialiteController::class, 'callBack'])
+        ->name('vk.callback');
+});

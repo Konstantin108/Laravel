@@ -11,6 +11,7 @@
             <tr>
                 <th>#ID</th>
                 <th>заголовок</th>
+                <th>статус</th>
                 <th>дата добавления</th>
                 <th>дата обновления</th>
                 <th>действие</th>
@@ -21,6 +22,7 @@
                 <tr>
                     <td>{{ $newsItem->id }}</td>
                     <td>{!!  $newsItem->title !!}</td>
+                    <td>{{  $newsItem->status }}</td>
                     <td>{{ $newsItem->created_at }}</td>
                     <td>{{ $newsItem->updated_at }}</td>
                     <td>

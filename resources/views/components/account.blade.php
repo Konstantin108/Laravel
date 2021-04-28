@@ -6,6 +6,10 @@
         <br>
         <h2>Данные пользователя</h2>
         <br>
+        @if(Auth::user()->avatar)
+            <img style="border-radius: 12px" src="{{ Auth::user()->avatar }}" alt="avatar">
+        @endif
+        <br>
         <p>Имя пользователя</p>
         <h3>{{Auth::user()->name}}</h3>
         <br>
