@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-6 offset-2">
                 <h1>Добавить новость</h1>
-                @if($errors->any())
-                        <div class="alert alert-danger">Необходимо заполнить поле "наименование" и выбрать категорию</div>
-                @endif
-                <form method="post" action="{{ route('admin.news.store') }}">
+                <form method="post"
+                      action="{{ route('admin.news.store') }}"
+                      enctype="multipart/form-data"
+                >
                     @csrf
                     <div class="form-group">
                         <label for="category_id">Категории</label>
@@ -19,12 +19,12 @@
                             name="category_id"
                         >
                             <option value="0">Выбрать</option>
-                            <option value="1">Политика</option>
-                            <option value="2">В мире</option>
-                            <option value="3">Экономика</option>
-                            <option value="4">Культура</option>
+                            <option value="1">Армия</option>
+                            <option value="2">Культура</option>
+                            <option value="3">Политика</option>
+                            <option value="4">Шоу-бизнес</option>
                             <option value="5">Спорт</option>
-                            <option value="6">Религия</option>
+                            <option value="6">Автомобили</option>
                             <option value="7">Игровая индустрия</option>
                         </select>
                         @if($errors->has('category_id'))
@@ -49,7 +49,19 @@
                     </div>
                     <div class="form-group">
                         <label for="slug">Слаг</label>
-                        <input type="text" id="slug" name="slug" class="form-control" value="{{old('slug')}}">
+                        <input type="text"
+                               id="slug"
+                               name="slug"
+                               @error('slug')
+                               style="border: red 1px solid;"
+                               @enderror
+                               class="form-control"
+                               value="{{old('slug')}}">
+                        @if($errors->has('slug'))
+                            @foreach($errors->get('slug') as $error)
+                                {{ $error }}
+                            @endforeach
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="description">Изображение</label>
@@ -57,8 +69,16 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Описание</label>
-                        <textarea type="text" id="text" name="text"
-                                  class="form-control">{!! old('text') !!}</textarea>
+                        <textarea type="text"
+                                  id="text"
+                                  name="text"
+                                  class="form-control">{!! old('text') !!}
+                        </textarea>
+                        @if($errors->has('text'))
+                            @foreach($errors->get('text') as $error)
+                                {{ $error }}
+                            @endforeach
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="status">Статус</label>
@@ -76,3 +96,19 @@
     </div>
 
 @endsection
+@push('js')
+
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: 'laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+    </script>
+    <script>
+        CKEDITOR.replace('text', options);
+    </script>
+
+@endpush

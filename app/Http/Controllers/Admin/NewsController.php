@@ -38,9 +38,11 @@ class NewsController extends Controller
                         'theme'
                 ])
                 ->count();
+            $categories = Category::select(['id']);
             return view('components.admin-index', [
                 'news' => $news,
-                'count' => $count
+                'count' => $count,
+                'categories' => $categories
             ]);
     }
 
@@ -62,13 +64,21 @@ class NewsController extends Controller
      */
     public function store(CreateNews $request)
     {
-        $data = $request->only([
-            'category_id',
-            'title',
-            'slug',
-            'text',
-            'status'
-        ]);
+        $data = $request->validated();
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $originalExt = $image->getClientOriginalExtension();
+            $fileName = uniqid();
+            $fileLink = $image->storeAs('news', $fileName . '.' . $originalExt, 'public');
+            $data['image'] = $fileLink;
+        }
+//        $data = $request->only([
+//            'category_id',
+//            'title',
+//            'slug',
+//            'text',
+//            'status'
+//        ]);
         $news = News::create($data);
         if($news){
             return redirect()->route('admin.news.index')
@@ -129,12 +139,21 @@ class NewsController extends Controller
      */
     public function update(UpdateNews $request, News $news)
     {
-        $data = $request->only([
-            'title',
-            'slug',
-            'text',
-            'status'
-        ]);
+        $data = $request->validated();
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            //$originalName = $image->getClientOriginalName();
+            $originalExt = $image->getClientOriginalExtension();
+            $fileName = uniqid();
+            $fileLink = $image->storeAs('news', $fileName . '.' . $originalExt, 'public');
+            $data['image'] = $fileLink;
+        }
+//        $data = $request->only([
+//            'title',
+//            'slug',
+//            'text',
+//            'status'
+//        ]);
         $news->category_id = $request->validated()['category_id'];
         $news = $news->fill($data);
         if($news->save()){

@@ -47,6 +47,7 @@ class News extends Model
             'category_id',
             'title',
             'slug',
+            'image',
             'text',
             'status'
     ];

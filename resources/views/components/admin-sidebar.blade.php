@@ -33,11 +33,19 @@
                     Заказать выгрузку
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
+                <a class="nav-link collapsed" href="{{ route('parsing') }}">
+                    <div class="sb-nav-link-icon"><i class="fab fa-algolia"></i></div>
+                    Запустить парсер
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
             @if(Auth::user()->avatar)
-                <img src="{{ Auth::user()->avatar }}" alt="avatar">
+                <img src="{{ Auth::user()->avatar }}"
+                     alt="avatar"
+                     style="max-width: 200px;"
+                >
             @endif
             <div class="small">Выполнен вход:</div>
             {{Auth::user()->name}}

@@ -58,13 +58,27 @@ class UsersController extends Controller
      */
     public function update(UpdateUser $request, User $user)
     {
-        $data = $request->only([
-            'name',
-            'email',
-            'is_admin'
-        ]);
-        $user = $user->fill($data);
-        if($user->save()){
+//        $data = $request->only([
+//            'name',
+//            'email',
+//            'is_admin'
+//        ]);
+//        $user = $user->fill($data);
+//        if($user->save()){
+//            return redirect()->route('admin.user.index')
+//                ->with('success', __('messages.admin.user.update.success'));
+//        }
+//        return back()->with('error', __('messages.admin.user.update.fail'));
+        $data = $request->validated();
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $originalExt = $avatar->getClientOriginalExtension();
+            $fileName = uniqid();
+            $fileLink = $avatar->storeAs('news', $fileName . '.' . $originalExt, 'public');
+            $data['avatar'] = $fileLink;
+        }
+        $user = $user->fill($data)->save();
+        if($user){
             return redirect()->route('admin.user.index')
                 ->with('success', __('messages.admin.user.update.success'));
         }

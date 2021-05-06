@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UnloadingController as AdminUnloadingController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
+use \App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,12 @@ Route::group(['middleware' => 'auth'], function () {
         return redirect()->route('login');
     })->name('logout');
 
+    //for account (profile settings)
+    Route::get('/profile/editProfile/{id}', [ProfileController::class, 'editProfile'])
+        ->where('id', '\d+')
+        ->name('editProfile');
+    Route::resource('/profile',ProfileController::class);
+
     //for admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::resource('/category', AdminCategoryController::class);
@@ -80,6 +87,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/unloading', AdminUnloadingController::class);
         Route::resource('/user', AdminUsersController::class);
     });
+
+    Route::get('parsing', ParserController::class)
+        ->name('parsing');
 
     Route::get('admin/news/delete/{id}', [AdminNewsController::class, 'delete'])
         ->where('id', '\d+')
@@ -108,8 +118,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
-
-Route::get('/parsing', ParserController::class);
 
 //for guest
 Route::group(['middleware' => 'guest', 'prefix' => 'socialite'], function (){

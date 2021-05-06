@@ -25,7 +25,11 @@ class CreateNews extends FormRequest
     {
         return[
             'category_id' => ['required', 'int', 'min:1'],
-            'title' => ['required', 'string', 'min:2']
+            'title' => ['required', 'string', 'min:2'],
+            'slug' => ['required', 'string', 'min:2'],
+            'image' => ['sometimes', 'image:jpg,jpeg,png'],
+            'text' => ['required', 'string', 'min:2'],
+            'status' => ['required', 'string', 'min:2']
         ];
     }
 
@@ -36,6 +40,7 @@ class CreateNews extends FormRequest
             'min' => [
                 'numeric' => 'Обязательно укажите :attribute'
             ],
+            'integer' => 'Обязательно укажите :attribute'
         ];
     }
 
@@ -43,7 +48,9 @@ class CreateNews extends FormRequest
     {
         return [
             'category_id' => 'категорию',
-            'title' => 'наименование'
+            'title' => 'наименование',
+            'slug' => 'слаг',
+            'text' => 'описание',
         ];
     }
 }

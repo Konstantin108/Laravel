@@ -26,7 +26,7 @@
                     <td>{{ $newsItem->created_at }}</td>
                     <td>{{ $newsItem->updated_at }}</td>
                     <td>
-                        <a href="{{ route('admin.news.edit', ['news'=> $newsItem]) }}">Ред.</a>&nbsp
+                        <a href="{{ route('admin.news.edit', ['news'=> $newsItem], ['categories' => $categories]) }}">Ред.</a>&nbsp
                         <a href="{{ route('delete', ['id' => $newsItem->id]) }}">Уд.</a>
                     </td>
                 </tr>

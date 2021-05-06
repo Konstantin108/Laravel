@@ -5,10 +5,26 @@
         <div class="row">
             <div class="col-6 offset-2">
                 <h1>Исправление данных пользователя</h1>
-                <form method="post" action="{{ route('admin.user.update', ['user' => $user]) }}">
+                <form method="post"
+                      action="{{ route('admin.user.update', ['user' => $user]) }}"
+                      enctype="multipart/form-data"
+                >
                     @csrf
                     @method('PUT')
                     <div class="form-group">
+                        @if($user->avatar)
+                            <img style="max-width: 200px;"
+                                 src="{{ \Storage::disk('public')->url($user->avatar) }}"
+                                 alt="avatar"
+                            >
+                        @else
+                            <img style="border-radius: 12px; max-width: 200px;"
+                                 src="{{ asset('/assets/img/no_photo.jpg') }}"
+                                 alt="avatar"
+                            >
+                        @endif
+                        <input type="file" id="avatar" name="avatar" class="form-control" style="width: 360px">
+                        <br>
                         <label for="name">Имя пользователя</label>
                         <input type="text"
                                id="name"
