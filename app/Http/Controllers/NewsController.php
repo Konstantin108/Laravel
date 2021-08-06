@@ -5,25 +5,24 @@ namespace App\Http\Controllers;
 use App\Enums\NewsStatusEnum;
 use App\Http\Requests\SendMessage;
 use App\Models\News;
-use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
     public function index()
     {
         $news = News::select([
-                'id',
-                'category_id',
-                'title',
-                'slug',
-                'text',
-                'created_at',
-                'status'
-            ])
+            'id',
+            'category_id',
+            'title',
+            'slug',
+            'text',
+            'created_at',
+            'status'
+        ])
             ->where('status', NewsStatusEnum::PUBLISHED)
             ->with('category')
             ->paginate(10);
-        $count=News::select(['id'])
+        $count = News::select(['id'])
             ->where('status', NewsStatusEnum::PUBLISHED)
             ->with('category')
             ->count();
@@ -35,17 +34,16 @@ class NewsController extends Controller
 
     public function indexByCategoryId($categoryId)   //<-- составление списка новостей по категориям
     {
-        $news=News::where([
-                ['category_id', $categoryId],
-                ['status', NewsStatusEnum::PUBLISHED]
-            ])
+        $news = News::where([
+            ['category_id', $categoryId],
+            ['status', NewsStatusEnum::PUBLISHED]
+        ])
             ->with('category')
             ->paginate(10);
-        $count=News::
-            where([
-                ['category_id', $categoryId],
-                ['status', NewsStatusEnum::PUBLISHED]
-             ])
+        $count = News::where([
+            ['category_id', $categoryId],
+            ['status', NewsStatusEnum::PUBLISHED]
+        ])
             ->with('category')
             ->count();
         return view('news', [
